@@ -13,7 +13,7 @@ export class MembersComponent implements OnInit {
   members: Member[];
   selectedMember: Member; // 現在選択されている社員
 
-  constructor(private emberService: MemberService) { }
+  constructor(private memberService: MemberService) { }
 
   ngOnInit(): void { // ライフサイクルメソッド：  コンポーネントが初期化する時に起動するメソッド
     this.getMembers();
@@ -24,8 +24,9 @@ export class MembersComponent implements OnInit {
     this.selectedMember = member;
   }
 
-  getMembers() :void {
-    this.members = this.emberService.getMembers(); // 社員のリスト
+  getMembers() :void { // 社員のリスト
+    this.memberService.getMembers() // Observable
+      .subscribe(members => this.members = members);
   }
 
 }
