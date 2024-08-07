@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Member } from '../member';
-import { MEMBERS } from '../mock-members';
+import { MemberService } from '../member.service';
+
 
 @Component({
   selector: 'app-members',
@@ -9,21 +10,22 @@ import { MEMBERS } from '../mock-members';
 })
 export class MembersComponent implements OnInit {
 
-  members = MEMBERS; // 社員のリスト
-  member: Member = {
-    id: 1,
-    name: '田中太郎'
-  };
+  members: Member[];
   selectedMember: Member; // 現在選択されている社員
 
-  constructor() { }
+  constructor(private emberService: MemberService) { }
 
   ngOnInit(): void { // ライフサイクルメソッド：  コンポーネントが初期化する時に起動するメソッド
+    this.getMembers();
   }
 
   // 社員を選択するメソッド
   onSelect(member: Member): void {
     this.selectedMember = member;
+  }
+
+  getMembers() :void {
+    this.members = this.emberService.getMembers(); // 社員のリスト
   }
 
 }
