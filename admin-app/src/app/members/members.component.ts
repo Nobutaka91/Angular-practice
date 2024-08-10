@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Member } from '../member';
 import { MemberService } from '../member.service';
+import { MessageService } from '../message.service';
 
 
 @Component({
@@ -13,7 +14,10 @@ export class MembersComponent implements OnInit {
   members: Member[];
   selectedMember: Member; // 現在選択されている社員
 
-  constructor(private memberService: MemberService) { }
+  constructor(
+    private memberService: MemberService,
+    private messageService: MessageService
+  ) { }
 
   ngOnInit(): void { // ライフサイクルメソッド：  コンポーネントが初期化する時に起動するメソッド
     this.getMembers();
@@ -22,6 +26,7 @@ export class MembersComponent implements OnInit {
   // 社員を選択するメソッド
   onSelect(member: Member): void {
     this.selectedMember = member;
+    this.messageService.add(`MemberComponent: 社員データ(id=${member.id})が選択されました`);
   }
 
   getMembers() :void { // 社員のリスト
