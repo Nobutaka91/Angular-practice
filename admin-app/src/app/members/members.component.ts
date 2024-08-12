@@ -26,4 +26,11 @@ export class MembersComponent implements OnInit {
       .subscribe(members => this.members = members);
   }
 
+  add(name: string): void {
+    name = name.trim(); // 前後の空白スペースがあったら取り除く
+    if (!name) { return;} // nameがから文字列の場合は何もせずにメソッドを終了
+    this.memberService.addMember({ name } as Member)
+      .subscribe(member => this.members.push(member));
+  }
+
 }
