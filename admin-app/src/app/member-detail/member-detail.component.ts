@@ -15,7 +15,7 @@ export class MemberDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute, // URLのパラメータやハッシュフラグメントを取得
-    private MemberService: MemberService,
+    private memberService: MemberService,
     private location: Location //ブラウザバックや進むなどのサービス
   ) { }
 
@@ -25,12 +25,17 @@ export class MemberDetailComponent implements OnInit {
 
   getMember(): void {
     const id = +this.route.snapshot.paramMap.get('id'); // +をつけると文字列から数字に変換される
-    this.MemberService.getMember(id)
-      .subscribe(member => this.member = this.member);
+    this.memberService.getMember(id)
+      .subscribe(member => this.member = member);
   }
 
   goBack(): void {
     this.location.back();
+  }
+
+  save(): void {
+    this.memberService.updateMember(this.member)
+      .subscribe(() => this.goBack());
   }
 
 }
